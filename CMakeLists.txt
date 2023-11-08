@@ -31,5 +31,5 @@ add_executable(vector-tests
     "test/vector_tests.cc"
 )
 
-
 target_include_directories(vector PUBLIC "include")
+target_link_libraries(vector-tests vector GTest::gtest_main)
