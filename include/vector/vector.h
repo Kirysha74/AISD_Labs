@@ -57,12 +57,6 @@ public:
 		}
 	}
 
-	void print() const {
-		for (int i = 0; i < _size; i++) {
-			cout << _vector[i] << endl;
-		}
-	}
-
 	Vector<T>& operator+=(const Vector<T>& rhs) {
 		for (int i = 0; i < _size; i++) {
 			_vector[i] += rhs[i];
@@ -118,6 +112,52 @@ public:
 	}
 };
 
+template<>
+Vector<complex<float>>::Vector() : _size(2), _vector(new complex<float>[_size]) {
+	for (int i = 0; i < _size; i++) {
+		_vector[i] = complex<float>(rand() + 0.00001 * rand(), rand() + 0.00001 * rand());
+	}
+}
+
+template<>
+Vector<complex<float>>::Vector(int size, int up, int down) : _size(size), _vector(new complex<float>[_size]) {
+	for (int i = 0; i < _size; i++) {
+		_vector[i] = complex<float>(rand() % (up - down) + down + 0.00001 * rand(), rand() % (up - down) + down + 0.00001 * rand());
+	}
+}
+
+template<>
+complex<float> Vector<complex<float>>::operator*(const Vector<complex<float>>& rhs) {
+	complex<float> k = 0;
+	for (int i = 0; i < _size; i++) {
+		k += _vector[i] * conj(rhs[i]);
+	}
+	return k;
+}
+
+template<>
+Vector<complex<double>>::Vector() : _size(2), _vector(new complex<double>[_size]) {
+	for (int i = 0; i < _size; i++) {
+		_vector[i] = complex<double>(rand() + 0.00001 * rand(), rand() + 0.00001 * rand());
+	}
+}
+
+template<>
+Vector<complex<double>>::Vector(int size, int up, int down) : _size(size), _vector(new complex<double>[_size]) {
+	for (int i = 0; i < _size; i++) {
+		_vector[i] = complex<double>(rand() % (up - down) + down + 0.00001 * rand(), rand() % (up - down) + down + 0.00001 * rand());
+	}
+}
+
+template<>
+complex<double> Vector<complex<double>>::operator*(const Vector<complex<double>>& rhs) {
+	complex<double> k = 0;
+	for (int i = 0; i < _size; i++) {
+		k += _vector[i] * conj(rhs[i]);
+	}
+	return k;
+}
+
 template <typename T>
 Vector<T> operator*(T rhs, const Vector<T> lhs) {
 	return lhs * rhs;
@@ -127,3 +167,12 @@ template <typename T>
 Vector<T> bes(Vector<T> lhs, Vector<T> rhs) {
 	return ((lhs + rhs) / 2);
 }
+
+template<typename T>
+std::ostream& operator << (std::ostream& stream, const Vector<T>& a) {
+	for (int i = 0; i < _size; i++) {
+		cout << _vector[i] << endl;
+	}
+	return stream;
+}
+
