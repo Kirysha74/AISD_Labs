@@ -12,6 +12,7 @@ namespace vector {
 		int _size;
 		T* _vector;
 		inline static const double EPSILION = 0.0001;
+
 	public:
 
 		int get_size() const {
@@ -45,11 +46,7 @@ namespace vector {
 			return true;
 		}
 
-		Vector() : _size(2), _vector(new T[_size]) {
-			for (int i = 0; i < _size; i++) {
-				_vector[i] = rand() + 0.000001 * rand();
-			}
-		}
+		Vector() : _size(0), _vector(nullptr) {};
 
 		~Vector() {
 			delete [] _vector;
@@ -140,8 +137,13 @@ namespace vector {
 		}
 
 		Vector<T>& operator/=(const T a) {
-			if (a == 0) {
-				throw exception("Division by zero");
+			try {
+				if (a == 0) {
+					throw exception("Division by zero");
+				}
+			}
+			catch(exception) {
+				return *this;
 			}
 			for (int i = 0; i < _size; i++) {
 				_vector[i] /= a;
@@ -156,13 +158,7 @@ namespace vector {
 
 	};
 
-	template<>
-	Vector<complex<float>>::Vector() : _size(2), _vector(new complex<float>[_size]) {
-		for (int i = 0; i < _size; i++) {
-			_vector[i] = complex<float>(rand() + 0.00001 * rand(), rand() + 0.00001 * rand());
-		}
-	}
-
+	
 	template<>
 	Vector<complex<float>>::Vector(int size, int up, int down) : _size(size), _vector(new complex<float>[_size]) {
 		for (int i = 0; i < _size; i++) {
@@ -180,13 +176,6 @@ namespace vector {
 			k += _vector[i] * conj(rhs[i]);
 		}
 		return k;
-	}
-
-	template<>
-	Vector<complex<double>>::Vector() : _size(2), _vector(new complex<double>[_size]) {
-		for (int i = 0; i < _size; i++) {
-			_vector[i] = complex<double>(rand() + 0.00001 * rand(), rand() + 0.00001 * rand());
-		}
 	}
 
 	template<>
@@ -210,8 +199,14 @@ namespace vector {
 
 	template<>
 	Vector<complex<float>>& Vector<complex<float>>::operator/=(const complex<float> a) {
-		if (a.imag() == 0 && a.real() == 0) {
-			throw exception("Division by zero");
+		try {
+			if (a.imag() == 0 && a.real() == 0) {
+				throw invalid_argument("Division by zero");
+			}
+		}
+		catch (invalid_argument) {
+			cout << "DIVISION BY ZERO";
+			return *this;
 		}
 		for (int i = 0; i < _size; i++) {
 			_vector[i] /= a;
@@ -221,8 +216,13 @@ namespace vector {
 
 	template<>
 	Vector<complex<double>>& Vector<complex<double>>::operator/=(const complex<double> a) {
-		if (a.imag() == 0 && a.real() == 0) {
-			throw exception("Division by zero");
+		try {
+			if (a.imag() == 0 && a.real() == 0) {
+				throw exception("Division by zero");
+			}
+		}
+		catch (exception) {
+			return *this;
 		}
 		for (int i = 0; i < _size; i++) {
 			_vector[i] /= a;
@@ -265,14 +265,13 @@ namespace vector {
 	template<typename T>
 	std::ostream& operator<<(std::ostream& stream, const Vector<T>& a) {
 		for (int i = 0; i < a.get_size(); i++) {
-			cout << a[i] << " ";
+			stream << a[i] << " ";
 		}
 		return stream;
 	}
 
 	template <typename T>
 	Vector<T> bisector(Vector<T> lhs, Vector<T> rhs) {
-		return ((lhs + rhs) / 2.0);
+		return ((lhs + rhs) / 2);
 	}
-
 }

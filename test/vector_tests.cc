@@ -13,7 +13,7 @@ int main() {
 	cout << "Sum " << a + b << endl;
 	cout << "Difference " << a - b << endl;
 	cout << "Multiplication of vectors " << a * b << endl;
-	cout << "Division " << a / 2 << endl;
+	cout << "Division " << a / 0 << endl;
 	cout << "Multiplication by scalar " << a * 2 << endl;
 	cout << "Multiplication by scalar " << (float)2 * a << endl;
 
@@ -24,7 +24,7 @@ int main() {
 	cout << "Sum " << c + d << endl;
 	cout << "Difference " << c - d << endl;
 	cout << "Multiplication of vectors " << c * d << endl;
-	cout << "Division " << c / 2 << endl;
+	cout << "Division " << c / (complex<float>)(0, 0) << endl;
 	cout << "Multiplication by scalar " << c * 2 << endl;
 	cout << "Multiplication by scalar " << (complex<float>)(9.4, 4.3) * c << endl;
 
