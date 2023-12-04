@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(vector CXX)
+project(linkedlist CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -22,14 +22,14 @@ FetchContent_Declare(googletest URL https://github.com/google/googletest/archive
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-add_library(vector SHARED
-    "include/vector/vector.h"
-    "src/vector.cc"
+add_library(linkedlist SHARED
+    "include/linkedlist/linkedlist.h"
+    "src/linkedlist.cc"
 )
 
-add_executable(vector-tests
-    "test/vector_tests.cc"
+add_executable(linkedlist-tests
+    "test/linkedlist_tests.cc"
 )
 
-target_include_directories(vector PUBLIC "include")
-target_link_libraries(vector-tests vector GTest::gtest_main)
+target_include_directories(linkedlist PUBLIC "include")
+target_link_libraries(linkedlist-tests linkedlist GTest::gtest_main)
